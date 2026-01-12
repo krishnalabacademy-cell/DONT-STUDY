@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NAHI PADHIYEGA">
+    <title>NAHI PADHIYEGA - AI Study Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#111827">
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<style>
+  :root {
+    --transition-speed: 0.3s;
+  }
+  
+  /* Base floating and fading animation */
+  @keyframes float-fade {
+    0% { opacity: 0; transform: translateY(50px) translateX(0) scale(0.8); }
+    20% { opacity: 0.7; transform: translateY(-10px) translateX(5px) scale(1.05); }
+    80% { opacity: 0.7; transform: translateY(-80px) translateX(-10px) scale(1.1); }
+    100% { opacity: 0; transform: translateY(-120px) translateX(-20px) scale(1.2); }
+  }
+
+  /* Variations of float-fade for diverse paths and speeds */
+  .animate-float-fade-1 {
+    animation: float-fade 4s ease-out forwards;
+    animation-iteration-count: 1;
+  }
+  .animate-float-fade-2 {
+    animation: float-fade 5s ease-in-out forwards;
+    animation-iteration-count: 1;
+    animation-direction: alternate; /* Float up and down */
+    transform-origin: center bottom;
+  }
+  .animate-float-fade-3 {
+    animation: float-fade 4.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Bouncier animation */
+    animation-iteration-count: 1;
+    transform-origin: center top;
+  }
+
+  /* Enhanced title animation: fade in with a slight bounce */
+  @keyframes fade-in-bounce {
+    0% {
+      opacity: 0;
+      transform: scale(0.7) translateY(50px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1) translateY(-10px);
+    }
+    70% {
+      transform: scale(0.95) translateY(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animate-fade-in-bounce {
+    animation: fade-in-bounce 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  /* Grid background for splash screen */
+  .bg-\[url\(\'\/grid\.svg\'\)\] {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 14v-4H10v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4H10v4H6v2h4v4h2v-4h4v-2h-4zm24 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM12 34v-4H10v4H6v2h4v4h2v-4h4v-2h-4zm0 0v-4H10v4H6v2h4v4h2v-4h4v-2h-4zM48 14v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm24 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM48 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM0 34v-4H-2v4H-6v2h4v4h2v-4h4v-2h-4zm0 0v-4H-2v4H-6v2h4v4h2v-4h4v-2h-4zM36 -6v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM0 -6v-4H-2v4H-6v2h4v4h2v-4h4v-2h-4zm0 0v-4H-2v4H-6v2h4v4h2v-4h4v-2h-4zM-24 14v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM-24 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 0v-4h-2v4H-6v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+</style>
+</head>
+  <body class="bg-gray-900 text-gray-100 overscroll-y-none">
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('SW registered: ', registration);
+          }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

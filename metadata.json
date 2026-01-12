@@ -1,0 +1,8 @@
+{
+  "name": "NAHI PADHIYEGA",
+  "description": "An AI-based Study Assistant and discipline coach designed to make learning interactive and fun. Features a focus timer, AI coach, smart scan, adaptive tests, and performance reports.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
