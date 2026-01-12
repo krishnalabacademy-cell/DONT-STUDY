@@ -1,4 +1,3 @@
-
 import { useLocalStorage } from './useLocalStorage';
 import useOnlineStatus from './useOnlineStatus';
 import { audioClips } from '../audio/sounds';
@@ -139,9 +138,7 @@ export const useAudio = () => {
     playFocusStart: () => playAudio(audioClips.start),
     playFocusReward: () => playAudio(audioClips.reward),
     playFocusScold: () => playAudio(audioClips.scold),
-    // FIX: Property 'neutral' does not exist on type '{ start: string; reward: string; scold: string; }'.
     playNeutral: () => playAudio(audioClips.neutral),
-    // FIX: Property 'reminder' does not exist on type '{ start: string; reward: string; scold: string; }'.
     playReminder: () => playAudio(audioClips.reminder),
   };
 };
